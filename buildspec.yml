@@ -1,0 +1,24 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+    commands:
+      # SonarQube Scanner 설치 (Node, Python, .NET 등은 각각 별도 설치)
+      curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
+      unzip sonar-scanner.zip
+      export PATH=$PATH:$(pwd)/sonar-scanner-4.8.0.2856-linux/bin
+
+  build:
+    commands:
+      # (선택) 프로젝트 빌드
+      mvn clean verify
+
+  post_build:
+    commands:
+      # SonarQube 분석 실행
+      sonar-scanner \
+        -Dsonar.projectKey=your_project_key \
+        -Dsonar.organization=your_org_key \  # SonarCloud 사용 시만 필요
+        -Dsonar.host.url=https://your-sonarqube-server \
+        -Dsonar.login=$SONAR_TOKEN
