@@ -16,9 +16,9 @@ phases:
 
   post_build:
     commands:
-      # SonarQube 분석 실행
+    # SonarQube 분석 실행
       sonar-scanner \
         -Dsonar.projectKey=your_project_key \
-        -Dsonar.organization=your_org_key \  # SonarCloud 사용 시만 필요
         -Dsonar.host.url=https://your-sonarqube-server \
         -Dsonar.login=$SONAR_TOKEN
+
